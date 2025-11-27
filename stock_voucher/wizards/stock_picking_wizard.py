@@ -40,7 +40,7 @@ class StockPickingZplLines(models.TransientModel):
 
     move_uom_id = fields.Many2one("uom.uom")
 
-    name = fields.Char(related="move_id.name")
+    name = fields.Char(related="move_id.reference")
 
     @api.constrains("move_quantity")
     def _check_move_quantity(self):
