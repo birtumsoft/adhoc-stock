@@ -1,6 +1,6 @@
 {
     "name": "Stock Report Substitute",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Inventory",
     "summary": "Bridge module between stock and report_substitute for digital signing",
     "author": "ADHOC SA",
