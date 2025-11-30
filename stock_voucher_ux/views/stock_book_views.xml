@@ -1,7 +1,7 @@
 <odoo>
     <record id="view_stock_book_form_ux" model="ir.ui.view">
         <field name="name">stock.book.form.ux</field>
-        <field name="model">stock.book</field>
+        <field name="model">stock.picking.type</field>
         <field name="inherit_id" ref="l10n_ar_stock.view_picking_type_form_inherit_l10n_ar_stock"/>
         <field name="arch" type="xml">
             <!--<xpath expr="//field[@name='lines_per_voucher']" position="after">
