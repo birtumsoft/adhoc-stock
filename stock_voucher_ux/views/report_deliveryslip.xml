@@ -4,17 +4,17 @@
         <xpath expr="//t[@t-set='pre_printed_report']" position="replace">
             <t t-set="pre_printed_report" t-value="o.book_id and not o.book_id.autoprinted"/>
         </xpath>
+
         <xpath expr="//div[@name='footer_right_column']" position="replace">
             <div name="footer_right_column" class="col-4 text-right">
-                <div t-if="o.book_id.autoprinted and o.book_id.l10n_ar_cai">
-                    CAI: <span t-field="o.book_id.l10n_ar_cai"/>
+                <div t-if="o.picking_type_id.l10n_ar_cai_authorization_code">
+                    CAI: <span t-field="o.picking_type_id.l10n_ar_cai_authorization_code"/>
                 </div>
-                <div t-if="o.book_id.autoprinted and o.book_id.l10n_ar_cai_due">
-                    CAI Due Date: <span t-field="o.book_id.l10n_ar_cai_due"/>
+                <div t-if="o.picking_type_id.l10n_ar_cai_expiration_date">
+                    CAI Due Date: <span t-field="o.picking_type_id.l10n_ar_cai_expiration_date" t-options="{'widget': 'date'}"/>
                 </div>
                 <div name="pager" t-if="report_type == 'pdf'">
-                    Page: <span class="page"/>
-/                   <span class="topage"/>
+                    Page: <span class="page"/> / <span class="topage"/>
                 </div>
             </div>
         </xpath>
