@@ -1,319 +1,114 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-        <template id="stock_voucher.custom_label_transfer_template_view_zpl">
-                <t t-foreach="docs" t-as="picking">
-                        <t t-set="numero" t-value="0"/>
-                        <t t-set="qty" t-value="picking.number_of_packages"/>
-                        <t t-if="qty == 0">
-                            <t t-set="qty" t-value="1"/>
+
+    <!-- ========================================================= -->
+    <!--               REPORTE PDF DE ETIQUETA DE REMITO          -->
+    <!-- ========================================================= -->
+    <template id="custom_label_transfer_template_view_pdf">
+        <t t-foreach="docs" t-as="o">
+            <div class="page">
+
+                <!-- HEADER -->
+                <div class="row">
+                    <div class="col-6">
+                        <strong>Customer:</strong>
+                        <span t-field="o.partner_id.commercial_partner_id.name"/>
+                        <br/>
+                        <strong>VAT Cond:</strong>
+                        <span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
+                        <br/>
+                        <t t-if="o.partner_id.vat">
+                            <strong>CUIT:</strong>
+                            <span t-field="o.partner_id.l10n_ar_formatted_vat"/>
                         </t>
-                        <t t-foreach="range(qty)" t-as="item">
-                            <t t-set="numero" t-value="numero + 1"/>
-                            <t t-translation="off">
-^XA
-                                                        <!-- Inicio encabezado -->
-<t t-if="picking.book_id">
-<t t-if="picking.book_id.report_partner_id">
-^CF0,60^CI28^FO50,50^FD
-<t t-esc="picking.book_id.report_partner_id.name"/>
-^FS ^CF0,30 ^FO50,110^FD
-<t t-esc="picking.book_id.report_partner_id.street"/>
-^FS ^FO50,145^FD
-(<t t-esc="picking.company_id.zip"/>
-)<t t-esc="picking.book_id.report_partner_id.city"/>
-^FS ^FO50,180^FD
-<t class="oe_inline" t-esc="picking.book_id.report_partner_id.state_id.name"/>
-,
-<t class="oe_inline" t-esc="picking.book_id.report_partner_id.country_id.name"/>
-^FS ^FO50,215^FDTel:
-<t t-esc="picking.company_id.phone"/>
-^FS ^FO50,250^GB700,3,3^FS
-</t>
-<t t-else="">
-^CF0,60^CI28^FO50,50^FD
-<t t-esc="picking.book_id.company_id.name"/>
-^FS ^CF0,30 ^FO50,110^FD
-<t t-esc="picking.book_id.company_id.street"/>
-^FS ^FO50,145^FD
-(<t t-esc="picking.company_id.zip"/>
-)<t t-esc="picking.book_id.company_id.city"/>
-^FS ^FO50,180^FD
-<t class="oe_inline" t-esc="picking.book_id.company_id.state_id.name"/>
-,
-<t class="oe_inline" t-esc="picking.book_id.company_id.country_id.name"/>
-^FS ^FO50,215^FDTel:
-<t t-esc="picking.company_id.phone"/>
-^FS ^FO50,250^GB700,3,3^FS
-</t>
-</t>
-<t t-else="">
-^CF0,60 ^FO50,50^FD
-<t t-esc="picking.company_id.name"/>
-^FS ^CF0,30 ^CI28 ^FO50,110^FD
-<t t-esc="picking.company_id.street"/>
-^FS ^FO50,145^FD
-(<t t-esc="picking.company_id.zip"/>
-)<t t-esc="picking.company_id.city"/>
-^FS ^FO50,180^FD
-<t class="oe_inline" t-esc="picking.company_id.state_id.name"/>
-,
-<t class="oe_inline" t-esc="picking.company_id.country_id.name"/>
-^FS ^FO50,215^FDTel:
-<t t-esc="picking.company_id.phone"/>
+                    </div>
 
-^FS ^FO50,250^GB700,3,3^FS
-<!-- Fin encabezado -->
-</t>
-<!-- Inicio destino -->
-<t t-if="picking.partner_id.parent_id">
-^FX Second section with recipient address and permit information. ^CFJ,23 ^FO50,280^FDDestinatario^FS ^CF0,45 ^TBN,700,100
-^FO50,310^FD
-<t t-esc="picking.partner_id.parent_id.name"/>
-^FS
-</t>
-<t t-else="">
-^FX Second section with recipient address and permit information. ^CFJ,23 ^FO50,280^FDDestinatario^FS ^CF0,45 ^TBN,700,100
-^FO50,310^FD
-<t t-esc="picking.partner_id.name"/>
-^FS
-</t>
-^CF0,30 ^FO50,425^FD
-<t t-esc="picking.partner_id.street"/>
-^FS ^FO50,465^FD
-<t class="oe_inline" t-esc="picking.partner_id.zip"/>
-,
-<t class="oe_inline" t-esc="picking.partner_id.city"/>
-^FS ^FO50,505^FD
-<t class="oe_inline" t-esc="picking.partner_id.state_id.name"/>
-,
-<t class="oe_inline" t-esc="picking.partner_id.country_id.name"/>
-^FS ^FO50,545^FDTel: ^FS
-<t t-if="picking.partner_id and (picking.partner_id.phone != False or picking.partner_id.mobile != False)">
-<t t-if="picking.partner_id.phone">
-^FO100,545^FD
-<t t-esc="picking.partner_id.phone"/>
-^FS
-</t>
-<t t-else="">
-^FO100,545^FD
-<t t-esc="picking.partner_id.mobile"/>
-^FS
-</t>
-</t>
-<t t-if="picking.partner_id.parent_id and (picking.partner_id.parent_id.phone != False or picking.partner_id.parent_id.mobile != False) and (picking.partner_id.phone == False and picking.partner_id.mobile == False)">
-<t t-if="picking.partner_id.parent_id.phone">
-^FO100,545^FD
-<t t-esc="picking.partner_id.parent_id.phone"/>
-^FS
-</t>
-<t t-else="">
-^FO100,545^FD
-<t t-esc="picking.partner_id.parent_id.mobile"/>
-^FS
-</t>
-</t>
-<t t-else="">
-^FS
-</t>
-<!-- Fin destino -->
-<t t-if="picking._fields.get('carrier_id') and picking.carrier_id">
-Transportista:
-^FX Transportista ^CFJ,30 ^FO50,615^FDTransportista: ^FS ^FO260,615^FD
-<t t-esc="picking.carrier_id.name"/>
-</t>
-<t t-else="">
-</t>
-^FS^FS ^FO50,655^GB700,3,3^FS
-^FX Referencias Odoo ^CFJ,25 ^FO50,680^FDOrden:^FS ^FO50,720^FDRemito:^FS ^CF0,28 ^FO160,680^FD
-<t t-esc="picking.origin"/>
-^FS ^FO160,720^FD
-<t t-set="voucher_names" t-value="','.join(picking.voucher_ids.mapped('name'))"/>
-<t t-esc="voucher_names"/>
-^FS ^BY3,2,160 ^FO100,765^BC^FD
-<t t-esc="picking.name"/>
-^FS ^FX Fecha y nro de bultos ^FO50,980^GB700,170,3^FS ^FO400,980^GB3,170,3^FS ^CFJ,30 ^FO180,1020^FDBultos^FS
-^CF0,50 ^FO160,1070^FD<t t-esc="numero"/>
- de <t t-if="picking.number_of_packages == 0">1</t>
-<t t-else="">
-<t t-esc="picking.number_of_packages"/>
-</t>^FS ^CFJ,30 ^FO520,1020^FD
-Fecha
-^FS ^CF0,50 ^FO460,1070^FD
-<t t-esc="picking.date_done" t-options="{'widget': 'date'}"/>
-^FS ^XZ
-</t>
-</t>
-</t>
-    </template>
-    <template id="stock_voucher.custom_label_transfer_template_view_pdf">
-        <t t-call="web.basic_layout">
-            <t t-foreach="docs" t-as="picking">
-                <t t-set="numero" t-value="0"/>
-                <t t-set="qty" t-value="picking.number_of_packages"/>
-                <t t-if="qty == 0">
-                    <t t-set="qty" t-value="1"/>
-                </t>
-                <t t-foreach="range(qty)" t-as="item">
-                    <t t-set="numero" t-value="numero + 1"/>
-                    <t t-translation="off">
-                        <!--inicio encabezado-->
-                        <div class="container" style="page-break-before: always;">
-                            <div name="section0" class="row">
-                                <div class="col-12" style="page-break-before: always;">
-                                    <t t-if="picking._fields.get('book_id') and picking.book_id">
-                                        <t t-if="picking.book_id.report_partner_id">
-                                            <h4>
-                                                <span t-field="picking.book_id.report_partner_id.name"/>
-                                            </h4>
-                                            <br/>
-                                            <span t-field="picking.book_id.report_partner_id.street"/>
-                                            <br/>
-
-(                                            <span t-field="picking.company_id.zip"/>
-)                                            <span t-field="picking.book_id.report_partner_id.city"/>
-                                            <br/>
-                                            <span class="oe_inline" t-field="picking.book_id.report_partner_id.state_id.name"/>
-,
-                                            <span class="oe_inline" t-field="picking.book_id.report_partner_id.country_id.name"/>
-                                            <br/>
-                                            <label>Tel: </label><span t-field="picking.company_id.phone"/>
-
-                                        </t>
-                                        <t t-else="">
-                                            <h4>
-                                                <span t-field="picking.book_id.company_id.name"/>
-                                            </h4>
-
-                                            <span t-field="picking.book_id.company_id.street"/>
-                                            <br/>
-(                                            <span t-field="picking.company_id.zip"/>
-)                                            <span t-field="picking.book_id.company_id.city"/>
-                                            <br/>
-                                            <span class="oe_inline" t-field="picking.book_id.company_id.state_id.name"/>
-,
-                                            <span class="oe_inline" t-field="picking.book_id.company_id.country_id.name"/>
-                                            <br/>
-                                            <label>Tel: </label><span t-field="picking.company_id.phone"/>
-                                        </t>
-                                    </t>
-                                    <t t-else="">
-                                        <h4>
-                                            <span t-field="picking.company_id.name"/>
-                                        </h4>
-                                        <br/>
-                                        <span t-field="picking.company_id.street"/>
-                                        <br/>
-(                                        <span t-field="picking.company_id.zip"/>
-)                                        <span t-field="picking.company_id.city"/>
-                                        <br/>
-                                        <span class="oe_inline" t-field="picking.company_id.state_id.name"/>
-,
-                                        <span class="oe_inline" t-field="picking.company_id.country_id.name"/>
-                                        <br/>
-                                        <label>Tel: </label><span t-field="picking.company_id.phone"/>
-                                    </t>
-
-                                </div>
-                            </div>
-
-                            <!--Fin encabezado-->
-                            <hr style="border-top: 1px solid black"/>
-                            <!-- Inicio destino -->
-                            <div style="font-weight: normal;">Destinatario:</div>
-                            <h4 style="font-weight: normal;">
-                                <t t-if="picking.partner_id.parent_id">
-                                    <t t-esc="picking.partner_id.parent_id.name"/>
-                                </t>
-                                <t t-else="">
-                                    <t t-esc="picking.partner_id.name"/>
-                                </t>
-                            </h4>
-
-                            <t t-esc="picking.partner_id.street"/>
+                    <div class="col-6 text-right">
+                        <strong>Order:</strong>
+                        <span t-field="o.origin"/>
+                        <t t-if="o.cot">
                             <br/>
-                    [                            <t class="oe_inline" t-esc="picking.partner_id.zip"/>
-]
-                            <t class="oe_inline" t-esc="picking.partner_id.city"/>
-                    ,
-                            <t class="oe_inline" t-esc="picking.partner_id.state_id.name"/>
-,
-                            <t class="oe_inline" t-esc="picking.partner_id.country_id.name"/>
-                            <div style="font-weight: normal;">Tel:
-                                <t t-if="picking.partner_id and (picking.partner_id.phone != False or picking.partner_id.mobile != False)">
-                                    <t t-if="picking.partner_id.phone">
-                                        <t t-esc="picking.partner_id.phone"/>
-                                    </t>
-                                    <t t-else="">
-                                        <t t-esc="picking.partner_id.mobile"/>
-                                    </t>
-                                </t>
-                                <t t-if="picking.partner_id.parent_id and (picking.partner_id.parent_id.phone != False or picking.partner_id.parent_id.mobile != False) and (picking.partner_id.phone == False and picking.partner_id.mobile == False)">
-                                    <t t-if="picking.partner_id.parent_id.phone">
-                                        <t t-esc="picking.partner_id.parent_id.phone"/>
-                                    </t>
-                                    <t t-else="">
-                                        <t t-esc="picking.partner_id.parent_id.mobile"/>
-                                    </t>
-                                </t>
-                                <t t-else="">
-                                </t>
-                            </div>
-                            <!-- Fin destino -->
-                            <hr style="border-top: 1px solid black"/>
-                            <!--Inicio pie-->
-
-                            <t t-if="picking._fields.get('carrier_id') and picking.carrier_id">
-Transportista:
-                                <t t-esc="picking.carrier_id.name"/>
-                            </t>
-                            <t t-else="">
-                            </t>
-                            <div style="font-weight: normal;">Orden:
-                                <t t-esc="picking.origin"/>
-                            </div>
-                            <div style="font-weight: normal;">Remito/s:
-                                <t t-set="voucher_names" t-value="','.join(picking.voucher_ids.mapped('name'))"/>
-                                <t t-esc="voucher_names"/>
-                            </div>
+                            <strong>COT:</strong>
+                            <span t-field="o.cot"/>
+                        </t>
+                        <t t-if="o.purchase_order_number">
                             <br/>
-                            <div name="footer_left_column" position="inside">
-                                <img t-if="picking.name" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', picking.name, 400, 40)" alt="barcode" style="height:40"/>
-                            </div>
+                            <strong>PO Number:</strong>
+                            <span t-field="o.purchase_order_number"/>
+                        </t>
+                    </div>
+                </div>
 
-                            <div style="text-align: center;">
-                                <t t-esc="picking.name"/>
-                            </div>
+                <!-- TABLE OF LINES -->
+                <table class="table table-sm mt16">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>UOM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o.move_lines" t-as="line">
+                            <tr>
+                                <td><span t-field="line.product_id.display_name"/></td>
+                                <td><span t-field="line.product_uom_qty"/></td>
+                                <td><span t-field="line.product_uom_id.name"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
 
-                            <br/>
-
-                            <table class="table table-bordered" style="width:100%; border: 1px solid black;">
-                                <thead>
-                                    <tr>
-                                        <th style="width:50%">Número</th>
-                                        <th style="width:50%">Fecha</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align:center;">
-                                            <t t-esc="numero"/>
- de <t t-if="picking.number_of_packages == 0">1</t>
-                                            <t t-else="">
-                                                <t t-esc="picking.number_of_packages"/>
-                                            </t>
-                                        </td>
-                                        <td style="text-align:center;">
-                                            <t t-esc="picking.date_done" t-options="{'widget': 'date'}"/>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <!-- SIGNATURE SECTION -->
+                <t t-if="o.picking_type_id.report_signature_section">
+                    <div class="row mt32">
+                        <div class="col-6 text-center">
+                            Recibí conforme:
+                            <hr style="border:1px solid #000"/>
                         </div>
-                        <!--Fin pie-->
-
-
-                    </t>
+                        <div class="col-6 text-center">
+                            Firma / Aclaración:
+                            <hr style="border:1px solid #000"/>
+                        </div>
+                    </div>
                 </t>
+
+                <!-- BARCODE SECTION -->
+                <t t-if="o.l10n_ar_afip_barcode">
+                    <div style="text-align:center; margin-top:16px;">
+                        <img t-att-src="'/report/barcode/?barcode_type=Code128&amp;value=%s&amp;width=400&amp;height=40' % o.l10n_ar_afip_barcode"/>
+                        <br/>
+                        <span t-esc="o.l10n_ar_afip_barcode"/>
+                    </div>
+                </t>
+
+            </div>
+        </t>
+    </template>
+
+    <!-- ========================================================= -->
+    <!--               REPORTE ZPL DE ETIQUETA DE REMITO          -->
+    <!-- ========================================================= -->
+    <template id="custom_label_transfer_template_view_zpl">
+        <t t-foreach="docs" t-as="o">
+            <t t-set="lines" t-value="o.move_lines"/>
+            <t t-foreach="lines" t-as="line">
+^XA
+^FO50,50^A0N,30,30^FDProduct: <t t-esc='line.product_id.display_name'/>^FS
+^FO50,100^A0N,30,30^FDQty: <t t-esc='line.product_uom_qty'/> <t t-esc='line.product_uom_id.name'/>^FS
+
+<t t-if="o.cot">
+^FO50,150^A0N,30,30^FDCOT: <t t-esc='o.cot'/>^FS
+</t>
+
+<t t-if="o.picking_type_id.report_signature_section">
+^FO50,200^A0N,30,30^FDRecibí conforme:^FS
+^FO50,250^GB400,1,3^FS
+^FO50,300^A0N,30,30^FDFirma / Aclaración:^FS
+^FO50,350^GB400,1,3^FS
+</t>
+
+^XZ
             </t>
         </t>
     </template>
