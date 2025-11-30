@@ -6,7 +6,7 @@ from odoo import fields, models
 
 
 class StockBook(models.Model):
-    _inherit = "stock.book"
+    _inherit = "stock.picking.type"
 
     autoprinted = fields.Boolean(
         help="If voucher is not an autoprinted, it will assign as many vouchers as pages the report has. "
