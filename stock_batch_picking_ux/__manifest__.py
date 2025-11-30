@@ -40,7 +40,7 @@
         "reports/picking_templates.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "application": False,
 }
