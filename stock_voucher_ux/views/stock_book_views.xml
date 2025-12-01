@@ -4,12 +4,12 @@
         <field name="model">stock.picking.type</field>
         <field name="inherit_id" ref="l10n_ar_stock.view_picking_type_form_inherit_l10n_ar_stock"/>
         <field name="arch" type="xml">
-            <!--<xpath expr="//field[@name='lines_per_voucher']" position="after">
+            <xpath expr="//field[@name='lines_per_voucher']" position="after">
                 <field name="autoprinted" widget="boolean_toggle"/>
             </xpath>
             <xpath expr="//field[@name='lines_per_voucher']" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </xpath>-->
+            </xpath>
             <xpath expr="//field[@name='l10n_ar_cai_authorization_code']" position="attributes">
                 <attribute name="invisible">autoprinted == False</attribute>
             </xpath>
