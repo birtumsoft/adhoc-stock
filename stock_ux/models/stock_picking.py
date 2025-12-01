@@ -47,11 +47,8 @@ class StockPicking(models.Model):
         for picking in self:
             if not default and picking.picking_type_id.block_additional_quantity:
                 raise UserError(
-                    _(
-                        'You can not duplicate a Picking because "Block'
-                        ' Additional Quantity" is enabled on the picking type "%s"'
-                    )
-                    % (picking.picking_type_id.name)
+                    _("You can not duplicate a Picking because 'Block Additional Quantity' is enabled on the picking type '%s'") 
+                    % picking.picking_type_id.name
                 )
         return super().copy(default=default)
 
