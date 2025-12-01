@@ -33,7 +33,7 @@
         "l10n_ar_stock",
     ],
     "data": [
-        #"views/stock_book_views.xml",
+        "views/stock_book_views.xml",
         "views/stock_picking_views.xml",
         "views/report_deliveryslip.xml",
     ],
