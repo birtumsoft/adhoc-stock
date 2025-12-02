@@ -15,7 +15,7 @@
             <t t-set="custom_header" t-value="'l10n_ar.custom_header'"/>
             <t t-set="report_date" t-value="o.date_done"/>
             <t t-set="report_number" t-value="o.vouchers or o.name"/>
-            <t t-set="pre_printed_report" t-value="o.book_id.lines_per_voucher"/>
+            <t t-set="pre_printed_report" t-value="not o.book_id.autoprinted"/>
             <t t-set="document_letter" t-value="o.document_type_id.l10n_ar_letter or 'X'"/>
             <t t-set="document_legend" t-value="'Doc. no válido como factura'"/>
             <t t-set="report_name" t-value="o.document_type_id.report_name or 'Comprobante de Entrega'"/>
@@ -87,7 +87,63 @@
     <t t-set="information_block" position="attributes">
         <attribute name="t-value">False</attribute>
     </t>
+    <!-- sacar la leyenda de nota de entrega-->
+    <xpath expr="//div[@class='page']/h2" position="replace">
+      <t t-if="not pre_printed_report">
+        <h2 style="margin-top: 15px;">
+          <span t-out="o.picking_type_id._get_code_report_name()"/>
+          <span t-field="o.name"/>
+        </h2>
+      </t>
+    </xpath>
+    <xpath expr="//div[@class='page']" position="inside">
+      <t t-if="pre_printed_report">
+        <style>
+          * {
+            color: #000 !important;
+            background: none !important;
+            box-shadow: none !important;
+          }
 
+          header, footer, .o_company_logo, .o_report_layout_background {
+            display: none !important;
+          }
+
+          .text-muted, .text-primary, .bg-primary, .bg-light, .bg-100, [style*="background-color"] {
+            background: none !important;
+            color: #000 !important;
+          }
+
+          table.table, table.table-sm, table.table-borderless, td, th, tr {
+            border: none !important;
+          }
+
+          table[name='stock_move_line_table'] thead th,
+          table[name='stock_move_table'] thead th {
+            border-bottom: 1px solid #000 !important;
+          }
+
+          #informations table,
+          #informations th,
+          #informations td {
+            border: none !important;
+          }
+
+          #informations div,
+          .row.mt32.mb32,
+          .report-wrapping-flexbox {
+            border: none !important;
+            background: none !important;
+          }
+
+          .text-end, .col-3, .col-auto {
+            background: none !important;
+            color: #000 !important;
+          }
+
+        </style>
+      </t>
+    </xpath>
     <!-- We want to hide order number and shipping address show at to left side of the report -->
     <xpath expr="//div[@name='div_origin']/.." position="attributes">
         <attribute name="id">hide_order_and_shipping_date</attribute>
@@ -103,7 +159,7 @@
                 <!-- IDENTIFICACION (ADQUIRIENTE-LOCATARIO-PRESTARIO) -->
 
                 <!-- (14) Apellido uy Nombre: Denominicacion o Razon Soclial -->
-                <strong>Customer: </strong>
+                <strong>Cliente: </strong>
                 <span t-field="commercial_partner.name"/>
 
                 <!-- (15) Domicilio Comercial -->
@@ -116,7 +172,7 @@
                 <span t-out="partner" t-options='{"widget": "contact", "fields": ["address", "phone", "mobile"], "no_marker": False}'/>
 
                 <!-- (16) Responsabilidad AFIP -->
-                <strong>VAT Cond: </strong>
+                <strong>Cond. IVA: </strong>
                 <span t-field="partner.l10n_ar_afip_responsibility_type_id"/>
 
                 <!-- (17) CUIT -->
@@ -132,7 +188,7 @@
             <div class="col-6">
 
                 <t>
-                    <strong>Order:</strong>
+                    <strong>Orden:</strong>
                     <span t-field="o.origin"/>
                 </t>
                 <t position="after">
@@ -149,7 +205,7 @@
                 </t>
                 <t t-if="o._fields.get('sale_id') and o.sudo().sale_id.client_order_ref">
                     <br/>
-                    <strong>Customer Reference:</strong>
+                    <strong>Referencia de cliente:</strong>
                     <span t-field="o.sudo().sale_id.client_order_ref"/>
                 </t>
                 <t t-if="o.declared_value">
