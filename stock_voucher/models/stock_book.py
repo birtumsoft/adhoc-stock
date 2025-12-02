@@ -38,6 +38,20 @@ class StockBook(models.Model):
         default=lambda self: self.env.company,
     )
     next_number = fields.Integer(related="sequence_id.number_next_actual", readonly=False)
+    report_partner_id = fields.Many2one(
+        'res.partner',
+        string='Contacto para Encabezado',
+        help='Para el encabezado de los remitos/comprobantes de entrega, la información a utilizar se obtendrá del '
+        'primer datos definido de estos lugares:\n'
+        '* Este campo\n'
+        '* Dirección del Almacen de la transferencia\n'
+        '* Información de la compañía de la transferencia'
+    )
+    report_signature_section = fields.Boolean(
+        string="Añadir sección firma",
+        help="Agregar al reporte una sección para añadir firma de confirmación de recepción.",
+        default=False,
+    )
     l10n_ar_document_type_id = fields.Many2one(
         comodel_name='l10n_latam.document.type',
         string="Document Type",
