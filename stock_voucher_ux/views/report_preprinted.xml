@@ -88,9 +88,6 @@
         <attribute name="t-value">False</attribute>
     </t>
 
-    <!-- remove default document title -->
-    <h2 position="replace"/>
-
     <!-- We want to hide order number and shipping address show at to left side of the report -->
     <xpath expr="//div[@name='div_origin']/.." position="attributes">
         <attribute name="id">hide_order_and_shipping_date</attribute>
