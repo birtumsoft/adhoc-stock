@@ -13,7 +13,7 @@
         <field name="header_spacing">0</field>
         <field name="dpi">90</field>
     </record>
-    <record id="batch_picking_preprinted_qweb" model="ir.actions.report">
+    <record id="batch_picking_preprinted_qweb_data" model="ir.actions.report">
         <field name="name">Remito Preimpreso (QWeb)</field>
         <field name="model">stock.picking.batch</field>
         <field name="report_type">qweb-pdf</field>
