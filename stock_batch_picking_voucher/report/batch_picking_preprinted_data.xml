@@ -12,8 +12,22 @@
         <field name="binding_model_id" ref="stock_picking_batch.model_stock_picking_batch"/>
         <field name="binding_type">report</field>
     </record>
+    <record id="picking_preprinted" model="ir.actions.report">
+        <field name="name">Preprinted Voucher (Picking)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_name">batch_picking_preprinted</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name="report_file">stock_batch_picking_voucher/report/batch_picking_preprinted.odt</field>
+        <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
+        <field name="tml_source">file</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+    </record>
 
 </odoo>
+
+
 <!--<odoo>
 
     <record id="paperformat_a4_preprinted" model="report.paperformat">
