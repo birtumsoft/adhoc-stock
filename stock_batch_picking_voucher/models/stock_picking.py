@@ -84,7 +84,7 @@ class StockPicking(models.Model):
     def do_print_batch_vouchers(self):
         _logger.info("🖨️ Ejecutando do_print_batch_vouchers() para picking %s", self.display_name)
         try:
-            action = self.env.ref("stock_batch_picking_voucher.batch_picking_preprinted").report_action(self)
+            action = self.env.ref("stock_batch_picking_voucher.picking_preprinted").report_action(self)
             _logger.info("✅ Reporte Aeroo preimpreso ejecutado correctamente para picking %s", self.name)
             return action
         except Exception as e:
