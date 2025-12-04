@@ -1,91 +1,91 @@
 <odoo>
-<t t-name="stock_batch_picking_voucher.batch_picking_preprinted_qweb">
-    <t t-call="web.html_container">
-        <t t-foreach="docs" t-as="batch">
-            <t t-set="picking" t-value="batch.picking_ids and batch.picking_ids[0] or None"/>
+    <template id="batch_picking_preprinted_qweb">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="batch">
+                <t t-set="picking" t-value="batch.picking_ids and batch.picking_ids[0] or None"/>
 
-            <div class="page" style="font-family:'Courier New'; font-size:12px; color:#000;">
-                <!-- ENCABEZADO -->
-                <div style="margin-bottom:15px;">
-                    <div>
-                        <strong>Cliente:</strong>
-                        <span t-field="picking.partner_id.commercial_partner_id.name"/>
+                <div class="page" style="font-family:'Courier New'; font-size:12px; color:#000;">
+                    <!-- ENCABEZADO -->
+                    <div style="margin-bottom:15px;">
+                        <div>
+                            <strong>Cliente:</strong>
+                            <span t-field="picking.partner_id.commercial_partner_id.name"/>
+                        </div>
+                        <div>
+                            <strong>Dirección:</strong>
+                            <span t-field="picking.partner_id.contact_address_complete"/>
+                        </div>
+                        <div>
+                            <strong>Enviar a:</strong>
+                            <span t-field="picking.partner_id.name"/>
+                        </div>
+                        <div>
+                            <strong>Fecha:</strong>
+                            <span t-field="picking.scheduled_date" t-options="{'widget': 'date'}"/>
+                        </div>
+                        <div>
+                            <strong>Remito N°:</strong>
+                            <span t-esc="', '.join(batch.voucher_ids.mapped('name'))"/>
+                        </div>
+                        <div>
+                            <strong>Teléfono:</strong>
+                            <span t-field="picking.partner_id.phone"/>
+                        </div>
+                        <div>
+                            <strong>Mail:</strong>
+                            <span t-field="picking.partner_id.email"/>
+                        </div>
+                        <div>
+                            <strong>Cond. IVA:</strong>
+                            <span t-field="picking.partner_id.l10n_latam_identification_type_id.name"/>
+                        </div>
+                        <div>
+                            <strong>CUIT:</strong>
+                            <span t-field="picking.partner_id.vat"/>
+                        </div>
+                        <div>
+                            <strong>Valor Declarado:</strong>
+                            <span t-field="picking.declared_value"/>
+                        </div>
                     </div>
-                    <div>
-                        <strong>Dirección:</strong>
-                        <span t-field="picking.partner_id.contact_address_complete"/>
-                    </div>
-                    <div>
-                        <strong>Enviar a:</strong>
-                        <span t-field="picking.partner_id.name"/>
-                    </div>
-                    <div>
-                        <strong>Fecha:</strong>
-                        <span t-field="picking.scheduled_date" t-options="{'widget': 'date'}"/>
-                    </div>
-                    <div>
-                        <strong>Remito N°:</strong>
-                        <span t-esc="', '.join(batch.voucher_ids.mapped('name'))"/>
-                    </div>
-                    <div>
-                        <strong>Teléfono:</strong>
-                        <span t-field="picking.partner_id.phone"/>
-                    </div>
-                    <div>
-                        <strong>Mail:</strong>
-                        <span t-field="picking.partner_id.email"/>
-                    </div>
-                    <div>
-                        <strong>Cond. IVA:</strong>
-                        <span t-field="picking.partner_id.l10n_latam_identification_type_id.name"/>
-                    </div>
-                    <div>
-                        <strong>CUIT:</strong>
-                        <span t-field="picking.partner_id.vat"/>
-                    </div>
-                    <div>
-                        <strong>Valor Declarado:</strong>
-                        <span t-field="picking.declared_value"/>
-                    </div>
-                </div>
 
-                <!-- LÍNEAS DE PRODUCTOS -->
-                <table style="width:100%; border-collapse:collapse; margin-top:20px;">
-                    <thead>
-                        <tr>
-                            <th style="text-align:left; border-bottom:1px solid #000;">Descripción</th>
-                            <th style="text-align:right; border-bottom:1px solid #000; width:100px;">Cantidad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <t t-foreach="picking.move_ids_without_package" t-as="move">
+                    <!-- LÍNEAS DE PRODUCTOS -->
+                    <table style="width:100%; border-collapse:collapse; margin-top:20px;">
+                        <thead>
                             <tr>
-                                <td><span t-field="move.product_id.display_name"/></td>
-                                <td style="text-align:right;">
-                                    <span t-field="move.product_uom_qty"/>
-                                    <span t-field="move.product_uom.name"/>
-                                </td>
+                                <th style="text-align:left; border-bottom:1px solid #000;">Descripción</th>
+                                <th style="text-align:right; border-bottom:1px solid #000; width:100px;">Cantidad</th>
                             </tr>
-                        </t>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="picking.move_ids_without_package" t-as="move">
+                                <tr>
+                                    <td><span t-field="move.product_id.display_name"/></td>
+                                    <td style="text-align:right;">
+                                        <span t-field="move.product_uom_qty"/>
+                                        <span t-field="move.product_uom.name"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
 
-                <!-- OBSERVACIONES -->
-                <div style="margin-top:25px;">
-                    <strong>OBSERVACIONES:</strong>
-                    <span t-field="picking.note"/>
-                </div>
+                    <!-- OBSERVACIONES -->
+                    <div style="margin-top:25px;">
+                        <strong>OBSERVACIONES:</strong>
+                        <span t-field="picking.note"/>
+                    </div>
 
-                <!-- BLOQUE FIRMAS -->
-                <div style="margin-top:60px;">
-                    <strong>Recibí Conforme:</strong><br/><br/>
-                    Fecha: _____________________ &#160;&#160; Hora: _____________________
-                    DNI: _____________________<br/><br/>
-                    FIRMA: _____________________________<br/><br/>
-                    ACLARACIÓN: _________________________
+                    <!-- BLOQUE FIRMAS -->
+                    <div style="margin-top:60px;">
+                        <strong>Recibí Conforme:</strong><br/><br/>
+                        Fecha: _____________________ &#160;&#160; Hora: _____________________<br/><br/>
+                        DNI: _____________________<br/><br/>
+                        FIRMA: _____________________________<br/><br/>
+                        ACLARACIÓN: _________________________
+                    </div>
                 </div>
-            </div>
+            </t>
         </t>
-    </t>
-</t>
+    </template>
 </odoo>
