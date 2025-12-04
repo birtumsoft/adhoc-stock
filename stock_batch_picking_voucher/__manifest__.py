@@ -36,7 +36,7 @@
     ],
     "data": [
         "report/batch_picking_preprinted_data.xml",
-        "report/batch_picking_preprinted_qweb.xml",
+        #"report/batch_picking_preprinted_qweb.xml",
         "views/stock_batch_picking_views.xml",
         "views/stock_picking_views.xml",
     ],

@@ -58,9 +58,8 @@ class StockPickingBatch(models.Model):
         return self.do_print_batch_vouchers()
 
     def do_print_batch_vouchers(self):
-        _logger.info("🖨️ Ejecutando do_print_batch_vouchers (QWeb) para batch %s", self.display_name)
-        return self.env.ref("stock_batch_picking_voucher.batch_picking_preprinted_qweb").report_action(self)
-
+        _logger.info("🖨️ Ejecutando do_print_batch_vouchers() para batch %s", self.display_name)
+        return self.env.ref("stock_batch_picking_voucher.batch_picking_preprinted").report_action(self)
 
     def do_clean(self):
         _logger.warning("🧹 Limpiando remitos del batch %s", self.display_name)
