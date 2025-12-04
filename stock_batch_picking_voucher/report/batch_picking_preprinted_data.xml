@@ -1,15 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-    <record id="batch_picking_preprinted_qweb" model="ir.actions.report">
-        <field name="name">Remito Preimpreso (QWeb)</field>
-        <field name="model">stock.picking.batch</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">stock_batch_picking_voucher.batch_picking_preprinted_qweb</field>
-        <field name="binding_model_id" ref="stock_picking_batch.model_stock_picking_batch"/>
-        <field name="binding_type">report</field>
-        <field name="paperformat_id" ref="stock_batch_picking_voucher.paperformat_a4_preprinted"/>
-    </record>
-    
+
     <record id="paperformat_a4_preprinted" model="report.paperformat">
         <field name="name">A4 Preimpreso</field>
         <field name="default" eval="False"/>
@@ -22,6 +13,17 @@
         <field name="header_spacing">0</field>
         <field name="dpi">90</field>
     </record>
+    <record id="batch_picking_preprinted_qweb" model="ir.actions.report">
+        <field name="name">Remito Preimpreso (QWeb)</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock_batch_picking_voucher.batch_picking_preprinted_qweb</field>
+        <field name="binding_model_id" ref="stock_picking_batch.model_stock_picking_batch"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="stock_batch_picking_voucher.paperformat_a4_preprinted"/>
+    </record>
+
+    
 </odoo>
 <!--<odoo noupdate="1">
     <record id="batch_picking_preprinted" model="ir.actions.report">
