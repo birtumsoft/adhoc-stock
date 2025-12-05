@@ -5,26 +5,6 @@
         <field name="priority">99</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
-            <button name="action_cancel" position="before">
-                <button name="do_print_and_assign" invisible="voucher_ids or state not in ('done')" string="Imprimir Remitos" type="object" class="oe_highlight" help="Prints pre-printed report and assigns vouchers depending on the number of sheets to be printed (automatic calculation)"/>
-                <button name="do_print_batch_vouchers" invisible="state not in ('done')" string="Imprimir" type="object" help="Print pre-printed report"/>
-                <button name="do_clean" invisible="not voucher_ids" string="Limpiar remitos" type="object"/>
-            </button>
-            <!--<button name="action_print" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </button>-->
-            <field name="user_id" position="after">
-                <field name="book_id" readonly="voucher_ids" string="Talonario"/>
-                <field name="next_number" invisible="not book_id or voucher_ids"/>
-                <field name="voucher_ids" widget="many2many_tags" readonly="picking_type_code != 'incoming'"/>
-            </field>
-            <!-- Hacemos esto para ajustar visual, sino queda todo en la primer columna -->
-            <field name="number_of_packages" position="replace"/>
-            <field name="user_id" position="replace"/>
-            <field name="scheduled_date" position="after">
-                <field name="user_id" readonly="state not in ['draft', 'in_progress']"/>
-                <field name="number_of_packages"/>
-            </field>
             <sheet position="before">
                 <!-- <field name="batch_vouchers" invisible="1"/> -->
                 <div class="alert alert-warning mb-2" invisible="not batch_id" role="alert">
@@ -39,6 +19,7 @@
             </field>
         </field>
     </record>
+
     <odoo>
     <record model="ir.ui.view" id="vpicktree_inherit">
         <field name="name">stock.picking.list.inherit</field>

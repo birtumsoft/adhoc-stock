@@ -12,7 +12,7 @@
         <field name="binding_model_id" ref="stock_picking_batch.model_stock_picking_batch"/>
         <field name="binding_type">report</field>
     </record>
-    <record id="picking_preprinted" model="ir.actions.report">
+    <!--<record id="picking_preprinted" model="ir.actions.report">
         <field name="name">Preprinted Voucher (Picking)</field>
         <field name="model">stock.picking</field>
         <field name="report_name">batch_picking_preprinted</field>
@@ -23,7 +23,7 @@
         <field name="tml_source">file</field>
         <field name="binding_model_id" ref="stock.model_stock_picking"/>
         <field name="binding_type">report</field>
-    </record>
+    </record>-->
 
 </odoo>
 
