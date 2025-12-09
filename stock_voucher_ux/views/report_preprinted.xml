@@ -3,18 +3,7 @@
 
     <template id="report_deliveryslip" inherit_id="stock.report_deliveryslip">
         <t t-foreach="docs" position="replace">
-            <t t-if="doc.book_id and not doc.book_id.autoprinted">
-                <!-- Usar el template original -->
-                <t t-call="stock.report_deliveryslip">
-                    <t t-set="doc" t-value="doc"/>
-                </t>
-            </t>
-            <t t-else="">
-                <!-- Si es pre-printed, usar html_container -->
-                <t t-call="web.html_container">
-                    <t t-set="o" t-value="doc"/>
-                </t>
-            </t>
+        
             <t t-foreach="l10n_ar_copies_list" t-as="copy_type">
                 <t>$0</t>
             </t>
@@ -163,6 +152,11 @@
     </xpath>
 
     <div id="hide_order_and_shipping_date" position="after">
+        <div style="font-size: 12px; margin-left: 520px; margin-top: -3px;">
+            <t t-if="o.date_done">
+                <t t-esc="o.date_done.strftime('%d/%m/%Y')"/>
+            </t>
+        </div>
         <div id="informations" class="row mt32 mb32">
             <div class="col-6">
                 <t t-set="partner" t-value="o.partner_id or (o.move_ids and o.move_ids[0].partner_id)"/>
@@ -198,17 +192,21 @@
 
             </div>
             <div class="col-6">
-
-                <t>
+                <!-- Fecha actual -->
+                <div style="font-size: 10px; margin-left: 100px; position: relative; top: -15px;">
+                    <t t-esc="(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                </div>
+                <!-- Campo ORDEN -->
+                <div style="margin-top: 2px;">
                     <strong>Orden:</strong>
                     <span t-field="o.origin"/>
-                </t>
-                <t position="after">
-                    <t t-if="o.cot">
-                        <br/>
-                        <strong>COT:</strong>
-                        <span t-field="o.cot"/>
-                    </t>
+                </div>
+            
+                <!-- Resto del bloque -->
+                <t t-if="o.cot">
+                    <br/>
+                    <strong>COT:</strong>
+                    <span t-field="o.cot"/>
                 </t>
                 <t t-if="o._fields.get('purchase_order_number') and o.sudo().purchase_order_number">
                     <br/>
