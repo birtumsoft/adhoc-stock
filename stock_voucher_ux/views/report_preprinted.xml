@@ -192,10 +192,6 @@
 
             </div>
             <div class="col-6">
-                <!-- Fecha actual -->
-                <div style="font-size: 10px; margin-left: 100px; position: relative; top: -15px;">
-                    <t t-esc="(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
-                </div>
                 <!-- Campo ORDEN -->
                 <div style="margin-top: 2px;">
                     <strong>Orden:</strong>
