@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- FORMATO DE PAPEL PERSONALIZADO -->
-    <record id="paperformat_deliveryslip_a4_recibo" model="report.paperformat">
+    <record id="paperformat_deliveryslip_a4_recibo_ux" model="report.paperformat">
         <field name="name">A4 Recibo de Entrega</field>
         <field name="default" eval="False"/>
         <field name="format">A4</field>
@@ -16,7 +15,7 @@
         <field name="dpi">90</field>
     </record>
     <record id="stock.action_report_delivery" model="ir.actions.report">
-        <field name="paperformat_id" ref="stock_voucher_ux.paperformat_deliveryslip_a4_recibo"/>
+        <field name="paperformat_id" ref="stock_voucher_ux.paperformat_deliveryslip_a4_recibo_ux"/>
     </record>
 
 </odoo>
