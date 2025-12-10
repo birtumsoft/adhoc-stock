@@ -37,7 +37,6 @@
         "views/stock_picking_views.xml",
         "views/report_deliveryslip.xml",
         "views/report_preprinted.xml",
-        #"views/report_preprinted_data.xml",
     ],
     "demo": [],
     "installable": True,
