@@ -37,12 +37,10 @@
         "views/stock_picking_views.xml",
         "views/report_deliveryslip.xml",
         "views/report_preprinted.xml",
-        "views/report_preprinted_data.xml",
+        #"views/report_preprinted_data.xml",
     ],
     "demo": [],
     "installable": True,
     "auto_install": False,
     "application": False,
-    'post_init_hook': 'post_init_hook',
-
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+    <!-- NO SE USA PORQUE CAMBIA EL FORMATO DEL REPORTE Y NO QUEDNA BIEN LOS MARGENES
+         SE DUPLICA EL FORMATO DE REPORTE A4 Y SE CAMBIA EL MARGEN SUPERIOR A 48-->
     <record id="paperformat_deliveryslip_a4_recibo_ux" model="report.paperformat">
         <field name="name">A4 Recibo de Entrega</field>
         <field name="default" eval="False"/>
