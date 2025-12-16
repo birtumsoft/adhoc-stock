@@ -159,6 +159,7 @@
         </div>
         <div id="informations" class="row mt32 mb32">
             <div class="col-6">
+                <br/>
                 <t t-set="partner" t-value="o.partner_id or (o.move_ids and o.move_ids[0].partner_id)"/>
                 <t t-set="commercial_partner" t-value="partner.commercial_partner_id"/>
 
@@ -175,7 +176,7 @@
                     <strong>Deliver to: </strong>
                     <span t-field="partner.name"/>
                 </span>
-                <span t-out="partner" t-options='{"widget": "contact", "fields": ["address", "phone", "mobile"], "no_marker": False}'/>
+                <span t-out="partner" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;phone&quot;, &quot;mobile&quot;], &quot;no_marker&quot;: False}"/>
 
                 <!-- (16) Responsabilidad AFIP -->
                 <strong>Cond. IVA: </strong>
@@ -191,7 +192,9 @@
                 </t>
 
             </div>
+            
             <div class="col-6">
+                <br/>
                 <!-- Campo ORDEN -->
                 <div style="margin-top: 2px;">
                     <strong>Orden:</strong>
