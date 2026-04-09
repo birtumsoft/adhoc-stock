@@ -10,6 +10,10 @@ from odoo.tools import float_compare
 class StockMove(models.Model):
     _inherit = "stock.move"
 
+    # PARCHE ODOO 19: El campo 'name' fue removido pero es referenciado en Automation Rules legacy.
+    name = fields.Char('Description (Legacy)')
+
+
     used_lots = fields.Char(
         compute="_compute_used_lots",
     )
@@ -109,6 +113,10 @@ class StockMove(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            # PARCHE ODOO 19: Si viene 'name' (de una regla antigua), lo movemos a 'description_picking'
+            if 'name' in vals and 'description_picking' not in vals:
+                vals['description_picking'] = vals['name']
+
             if not vals.get("picking_id", False):
                 continue
             sp = self.env["stock.picking"].browse(vals["picking_id"])
