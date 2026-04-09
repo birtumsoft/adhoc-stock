@@ -114,8 +114,11 @@ class StockMove(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             # PARCHE ODOO 19: Si viene 'name' (de una regla antigua), lo movemos a 'description_picking'
-            if 'name' in vals and 'description_picking' not in vals:
-                vals['description_picking'] = vals['name']
+            # y lo ELIMINAMOS de vals para que no explote el super().create() si el campo no existe.
+            if 'name' in vals:
+                if 'description_picking' not in vals:
+                    vals['description_picking'] = vals['name']
+                vals.pop('name')
 
             if not vals.get("picking_id", False):
                 continue
